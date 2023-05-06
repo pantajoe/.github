@@ -1,0 +1,112 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Default preset for use with @pantajoe's repos",
+  "extends": [
+    "config:base",
+    "schedule:weekly",
+    "group:allNonMajor",
+    "group:linters",
+    ":rebaseStalePrs",
+    ":semanticCommits",
+    ":semanticCommitScope(deps)",
+    ":maintainLockFilesWeekly",
+    "docker:enableMajor"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "platformCommit": true,
+  "dependencyDashboard": true,
+  "automergeType": "branch",
+  "rebaseWhen": "behind-base-branch",
+  "platformAutomerge": true,
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "automerge": true,
+    "platformAutomerge": true
+  },
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["react", "@types/react"],
+      "groupName": "react"
+    },
+    {
+      "matchPackagePatterns": ["^@tailwindcss\\/"],
+      "matchPackageNames": ["tailwindcss"],
+      "groupName": "tailwind"
+    },
+    {
+      "extends": "packages:linters",
+      "matchPackagePatterns": ["^@antfu/eslint"],
+      "groupName": "linters"
+    },
+    {
+      "description": "Group prettier packages",
+      "matchPackageNames": ["prettier"],
+      "matchPackagePatterns": ["^@prettier\\/", "^prettier-plugin-"],
+      "groupName": "prettier packages"
+    },
+    {
+      "matchPackagePatterns": ["^@storybook/", "^storybook-"],
+      "groupName": "storybook"
+    },
+    {
+      "matchPackageNames": ["@nestjs/common", "@nestjs/core", "@nestjs/platform-express", "@nestjs/platform-socket.io", "@nestjs/websockets", "@nestjs/testing"],
+      "groupName": "nestjs"
+    },
+    {
+      "matchPackageNames": ["^@nestjs/"],
+      "excludePackageNames": ["@nestjs/common", "@nestjs/core", "@nestjs/cli", "@nestjs/platform-express", "@nestjs/platform-socket.io", "@nestjs/websockets", "@nestjs/testing", "@nestjs/graphql", "@nestjs/apollo"],
+      "groupName": "nestjs packages"
+    },
+    {
+      "matchPackageNames": ["jest", "ts-jest", "@types/jest"],
+      "matchPackagePatterns": ["jest"],
+      "groupName": "jest packages"
+    },
+    {
+      "matchPackagePatterns": ["^@appsignal/"],
+      "groupName": "appsignal"
+    },
+    {
+      "matchPackagePatterns": ["^@sentry/"],
+      "groupName": "sentry"
+    },
+    {
+      "matchPackagePrefixes": ["graphql-", "@types/graphql-", "@nestjs/graphql", "@nestjs/apollo", "@nestjs/mercurius"],
+      "excludePackageNames": ["graphql", "graphql-upload"],
+      "groupName": "graphql packages"
+    },
+    {
+      "matchPackagePatterns": ["^@mikro-orm/"],
+      "groupName": "mikro-orm"
+    },
+    {
+      "matchPackagePatterns": ["^@graphql-codegen\\/"],
+      "groupName": "graphql-codegen"
+    },
+    {
+      "matchPackagePatterns": ["^@commitlint\\/", "^commitlint-"],
+      "groupName": "commitlint"
+    },
+    {
+      "matchPackagePatterns": ["^@vitejs/", "^vite-plugin-"],
+      "matchPackageNames": ["vite", "@storybook/builder-vite"],
+      "groupName": "vite"
+    },
+    {
+      "matchPackagePatterns": ["^@urql/", "^urql-"],
+      "matchPackageNames": ["urql"],
+      "groupName": "urql"
+    },
+    {
+      "matchPackageNames": ["aws-sdk"],
+      "matchPackagePatterns": ["^@aws-sdk\\/"]
+    },
+    {
+      "description": "Automerge non-major updates",
+      "matchUpdateTypes": ["minor", "patch", "digest", "lockFileMaintenance"],
+      "automerge": true,
+      "platformAutomerge": true
+    }
+  ]
+}
